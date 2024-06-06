@@ -72,16 +72,17 @@
         <hr>
         <h1>회원가입</h1>
         <p>이미 계정이 있습니까? <a href="#" class="login-link">로그인</a></p>
+        <input type="text" class="form-control" placeholder="닉네임" id="signUpName">
         <input type="email" class="form-control" placeholder="이메일" id="signUpEmail">
         <input type="password" class="form-control" placeholder="비밀번호" id="signUpPassword">
-        <button type="submit" class="btn btn-primary" id="signUpButton">로그인</button>
+        <button type="submit" class="btn btn-primary" id="signUpButton">회원가입</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDQI-YZlvaxuAs0ZXWY4YXrJsqAzlGBEa0",
@@ -99,15 +100,36 @@
 
         document.getElementById('signUpButton').addEventListener('click', (event) => {
             event.preventDefault();
+            const signUpName = document.getElementById('signUpName').value;
             const signUpEmail = document.getElementById('signUpEmail').value;
             const signUpPassword = document.getElementById('signUpPassword').value;
 
             createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword)
                 .then((userCredential) => {
-                    alert('가입 성공!');
-                    console.log(userCredential);
                     const user = userCredential.user;
-                    window.location.href = 'index.html';
+
+                    // 사용자 이름 업데이트
+                    updateProfile(user, {
+                        displayName: signUpName
+                    }).then(() => {
+                        console.log('사용자 이름 업데이트 성공');
+                    }).catch((error) => {
+                        console.error('사용자 이름 업데이트 실패: ', error);
+                    });
+
+                    // 이메일 인증 보내기
+                    sendEmailVerification(user)
+                        .then(() => {
+                            alert('가입 성공! 인증 이메일이 전송되었습니다. 이메일을 확인하고 계정을 활성화하세요.');
+                            signOut(auth).then(() => {
+                                window.location.href = 'login.html';
+                            }).catch((error) => {
+                                console.error('로그아웃 실패: ', error);
+                            });
+                        })
+                        .catch((error) => {
+                            console.error('인증 이메일 전송 실패: ', error);
+                        });
                 })
                 .catch((error) => {
                     alert('가입 실패: ' + error.message);
@@ -117,6 +139,15 @@
 
         document.querySelector('.login-link').addEventListener('click', () => {
             window.location.href = 'login.html';
+        });
+
+        // 인증이 완료되지 않으면 로그인 시도 시 차단
+        onAuthStateChanged(auth, (user) => {
+            if (user && !user.emailVerified) {
+                alert('이메일 인증이 필요합니다. 이메일을 확인해주세요.');
+                signOut(auth);
+                window.location.href = 'login.html';
+            }
         });
     </script>
 </body>
