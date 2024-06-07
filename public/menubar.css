@@ -1,0 +1,154 @@
+*{
+    font-family: "Noto Sans KR", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    text-decoration: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.intro__bg {
+    background-image: url("media/메인.jpg");
+    width: 100%;
+    height: 778px;
+    background-repeat: no-repeat;
+}
+
+.menubar a {
+    text-decoration: none;
+    font-weight: 500;
+    color: rgb(21, 21, 21);
+}
+.menubar__logo a{
+    font-weight: 800;
+}
+.menubar {
+    display : flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(245, 245, 245);
+    padding: 8px 12px;
+}
+
+.menubar__logo{
+    font-size: 24px;
+    color: black;
+}
+
+.menubar__logo i{
+    color: black;
+}
+
+.menubar__menu {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+    color : rgb(21, 21, 21);
+    font-size: 18px;
+}
+
+.menubar__menu li {
+    padding: 8px 50px;
+}
+
+.menubar__login {
+    list-style: none;
+    font-size : 19px;
+    color : black;
+    display: flex;
+}
+
+.menubar__login li {
+    padding : 8px 12px;
+}
+
+.menubar__menu li:hover{
+    background-color: #9d9c9c;
+    border-radius: 4px;
+}
+
+.menubar__toggleBtn {
+    display: none;
+    position: absolute;
+    right: 32px;
+    top : 8px;
+    font-size: 24px;
+    color:black;
+}
+
+.intro__text{
+    color:rgb(249, 236, 236);
+    width: 100%;
+    position:absolute;
+    margin : auto;
+    text-align: left;
+    top : 200px;
+    left:100px;
+}
+
+.intro__text p1{
+    font-size : 80px;
+    font-weight: 200;
+    text-align: center;
+    overflow: hidden;
+}
+.intro__text p2 {
+    font-size : 20px;
+    font-weight: 200;
+}
+
+.main__text {
+    font-size : 48px;
+    padding-top : 50px;
+    text-align: center;
+    width:100%;
+    height: 700px;
+    background:rgb(245, 245, 245);
+}
+.contents5 {
+    font-size : 20px;
+    text-align: center;
+    font-weight: 100;
+}
+
+.carousel-inner{
+    margin-top: 60px;
+    width: 100%;
+    height: 760px;
+}
+@media screen and (max-width: 768px) {
+    .menubar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 8px 24px;
+}
+
+.menubar__menu {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.menubar__menu li {
+    width: 100%;
+    text-align: center;
+}
+
+.menubar__toggleBtn {
+    display: block;
+}
+
+.menubar__login {
+    position : absolute;
+    right : 70px;
+    top : 18px;
+    
+}
+
+.menubar__menu.active {
+    display: flex;
+}
+
+}

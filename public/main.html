@@ -6,26 +6,28 @@
     <link rel="stylesheet" type="text/css" href="menubar.css">
     <!--메뉴바 폰트-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-    <title>웹페이지 이름 미정</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">    <title>웹페이지 이름 미정</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/2cefce6bc1.js" crossorigin="anonymous"></script>
+    <script src="main.js" defer></script>
 </head>
 <body>
     <div class="intro__bg">
     <!--메뉴바-->
       <nav class="menubar">
         <div class="menubar__logo">
-          <i class="fa-solid fa-person-walking-luggage"></i>
-          <a href="http://apis.data.go.kr/B551011/KorService1">사이트이름</a>
-      </div>
+            <i class="fa-solid fa-person-walking-luggage"></i>
+            <a href="http://apis.data.go.kr/B551011/Durunubi/routeList?serviceKey=ServiceKey&numOfRows=10&pageNo=1&MobileOS=AND&MobileApp=appName">사이트이름</a>
+        </div>
         <div class="menubar__menu">
-            <li><a href="#">여행지</a></li>
-            <li><a href="#">길찾기</a></li>
-            <li><a href="#">리뷰</a></li>
-            <li><a href="#">행사</a></li>
+            <li><a href="">여행지</a></li>
+            <li><a href="">길찾기</a></li>
+            <li><a href="ViewReview.html">리뷰</a></li>
+            <li><a href="">행사</a></li>
         </div>
         <div class="menubar__search">
             
@@ -36,10 +38,9 @@
             지역 별 축제와 맛집까지 한 눈에ㅇ</p2>
         </div>
         <!-- 로그인 페이지로 이동 -->
-        <a href="#" class="menubar__login">
+        <a href="ProfileCheck.html" class="menubar__login">
             <i class="fa-solid fa-user"></i>
-        </a>
-        <a href="#" class="menubar__toggleBtn" onclick="event.preventDefault(); alert('로그인이 필요합니다.'); window.location.href = 'login.html';">
+        <a href="ProfileCheck.html" class="menubar__toggleBtn">
             <i class="fa-solid fa-bars"></i>
         </a>
       </nav>
@@ -60,7 +61,7 @@
             </div>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <a href="#">
+                <a href="">
                 <img src="https://korea.counterpointresearch.com/wp-content/uploads/2022/11/image-12-980x654.png" class="d-block w-100" alt="first"></a>
                 <div class="carousel-caption d-none d-md-block">
                     <p>서울</p>
@@ -68,7 +69,7 @@
                 </div>
               </div>
               <div class="carousel-item">
-                <a href="#">
+                <a href="">
                 <img src="https://images.unsplash.com/photo-1632150049355-cafb158dd68d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="d-block w-100" alt="second"></a>
                 <div class="carousel-caption d-none d-md-block">
                     <p>강릉</p>
@@ -76,8 +77,7 @@
                 </div>
               </div>
               <div class="carousel-item">
-              <div class="carousel-item">
-                <a href="#">
+                <a href="">
                 <img src="https://beelinguappbucket.s3.amazonaws.com/BlogPosts/korean-vocabulary-a-list-of-fruit-and-vegetable-names/CoverImages/Image%281708705272797%29.png" class="d-block w-100" alt="third"></a>
                 <div class="carousel-caption d-none d-md-block">
                   <p>제주</p>
@@ -85,7 +85,7 @@
                 </div>
               </div>
               <div class="carousel-item">
-                <a href="#">
+                <a href="">
                 <img src="https://cdn.stardailynews.co.kr/news/photo/202401/433821_436729_3241.jpg" class="d-block w-100" alt="fourth"></a>
                 <div class="carousel-caption d-none d-md-block">
                     <p>부산</p>
@@ -93,7 +93,7 @@
                 </div>
               </div>
               <div class="carousel-item">
-                <a href="#">
+                <a href="">
                 <img src="http://www.cha.go.kr/unisearch/images/national_treasure/2021032414194701.JPG" class="d-block w-100" alt="fifth"></a>
                 <div class="carousel-caption d-none d-md-block">
                     <p>경주</p>
@@ -111,20 +111,5 @@
             </button>
           </div>
       </div>
-    <script>
-        // 모든 클릭 가능한 요소 선택
-        const clickableElements = document.querySelectorAll('a[href="#"]');
-
-        // 각 요소에 클릭 이벤트 핸들러 추가
-        clickableElements.forEach(element => {
-            if (!element.classList.contains('menubar__toggleBtn')) {
-                element.addEventListener('click', function(event) {
-                    event.preventDefault(); // 기본 동작 방지 (링크로의 이동 등)
-                    alert('로그인이 필요합니다.'); // 알람 표시
-                    window.location.href = 'login.html'; // 로그인 페이지로 이동
-                });
-            }
-        });
-    </script>
 </body>
 </html>
