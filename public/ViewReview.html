@@ -4,66 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>리뷰 목록 페이지</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5nlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
-        .review-table th, .review-table td {
-            text-align: center;
-            vertical-align: middle;
+        .review-container {
+            margin-bottom: 15px;
         }
-        .new-badge {
-            color: red;
-            font-weight: bold;
+        .review-content {
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
         }
         .profile-picture {
             width: 30px;
             height: 30px;
             border-radius: 50%;
             object-fit: cover;
+            margin-right: 10px;
+        }
+        .username {
+            font-weight: bold;
+        }
+        .new-badge {
+            color: red;
+            font-weight: bold;
+            margin-left: 10px;
         }
         .delete-btn {
             color: red;
             cursor: pointer;
+            float: right;
+        }
+        .pagination {
+            justify-content: center;
+        }
+        .recommend-button {
+            background-color: #ffc107;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .recommend-count {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        .fixed-reviews-container {
+            margin-bottom: 20px;
+        }
+        .fixed-review-item {
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #fff3cd;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 class="text-center">리뷰 목록</h1>
-        <table class="table table-striped review-table">
-            <thead>
-                <tr>
-                    <th scope="col">번호</th>
-                    <th scope="col">제목</th>
-                    <th scope="col">글쓴이</th>
-                    <th scope="col">날짜</th>
-                    <th scope="col">조회 수</th>
-                    <th scope="col">삭제</th>
-                </tr>
-            </thead>
-            <tbody id="reviewsContainer">
-                <!-- 리뷰 목록이 여기에 삽입됩니다. -->
-            </tbody>
-        </table>
+
+        <!-- 고정된 추천 리뷰 섹션 -->
+        <div id="topRecommendedReviews" class="fixed-reviews-container">
+            <h2 class="text-center">추천 리뷰</h2>
+            <div id="recommendedReviewList"></div>
+        </div>
+
+        <div id="reviewsContainer">
+            <!-- 리뷰 목록이 여기에 삽입됩니다. -->
+        </div>
         <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center" id="pagination">
+            <ul class="pagination" id="pagination">
                 <!-- 페이지네이션 버튼이 여기에 삽입됩니다. -->
             </ul>
         </nav>
-    </div>
-
-    <!-- 모달 창 -->
-    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="reviewModalLabel">리뷰 세부 내용</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body" id="reviewDetailBody">
-            <!-- 세부 내용이 여기에 표시됩니다. -->
-          </div>
-        </div>
-      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -71,7 +88,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, collection, query, getDocs, orderBy, limit, startAfter, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getFirestore, collection, query, getDocs, orderBy, limit, startAfter, endBefore, limitToLast, doc, deleteDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDQI-YZlvaxuAs0ZXWY4YXrJsqAzlGBEa0",
@@ -90,9 +107,38 @@
 
         let lastVisibleReview = null;
         const reviewsContainer = document.getElementById('reviewsContainer');
+        const recommendedReviewList = document.getElementById('recommendedReviewList');
         const pagination = document.getElementById('pagination');
         const pageSize = 10; // 한 페이지에 보여줄 리뷰 수
 
+        // 추천 리뷰를 로드하는 함수
+        const loadTopRecommendedReviews = async () => {
+            recommendedReviewList.innerHTML = '';
+
+            const topReviewsQuery = query(
+                collection(db, 'reviews'),
+                orderBy('recommendations', 'desc'),
+                limit(3)
+            );
+
+            const topReviewsSnapshot = await getDocs(topReviewsQuery);
+            topReviewsSnapshot.forEach((doc) => {
+                const review = doc.data();
+                const reviewElement = document.createElement('div');
+                reviewElement.className = 'fixed-review-item';
+                reviewElement.innerHTML = `
+                    <div class="d-flex align-items-center mb-2">
+                        <img src="${review.userPhoto}" class="profile-picture" alt="프로필 사진">
+                        <span class="username">${review.userName}</span>
+                        <span class="recommend-count">추천: ${review.recommendations}</span>
+                    </div>
+                    <p>${review.content}</p>
+                `;
+                recommendedReviewList.appendChild(reviewElement);
+            });
+        };
+
+        // 리뷰 목록을 로드하는 함수
         const loadReviews = async (pageSize = 10) => {
             reviewsContainer.innerHTML = '';
             pagination.innerHTML = '';
@@ -104,7 +150,7 @@
             );
 
             const querySnapshot = await getDocs(reviewsQuery);
-            querySnapshot.forEach((doc, index) => {
+            querySnapshot.forEach((doc) => {
                 const review = doc.data();
                 const reviewDate = new Date(review.timestamp.seconds * 1000);
                 const now = new Date();
@@ -112,17 +158,19 @@
                 const isNew = timeDiff / (1000 * 3600) < 24; // 24시간 이내의 리뷰는 NEW 배지 표시
 
                 reviewsContainer.innerHTML += `
-                    <tr>
-                        <th scope="row">${index + 1}</th>
-                        <td><a href="#" onclick="showReviewDetails('${doc.id}')">${review.title}</a> ${isNew ? '<span class="new-badge">NEW</span>' : ''}</td>
-                        <td>
-                            <img src="${review.userPhoto}" class="profile-picture" alt="프로필 사진"> 
-                            ${review.userName}
-                        </td>
-                        <td>${reviewDate.toLocaleDateString()}</td>
-                        <td>${review.views || 0}</td>
-                        <td>${auth.currentUser.uid === review.userId ? '<span class="delete-btn" onclick="event.stopPropagation(); deleteReview(\'' + doc.id + '\')">삭제</span>' : ''}</td>
-                    </tr>
+                    <div class="review-container">
+                        <div class="review-content">
+                            <div class="d-flex align-items-center mb-2">
+                                <img src="${review.userPhoto}" class="profile-picture" alt="프로필 사진">
+                                <span class="username">${review.userName}</span>
+                                ${isNew ? '<span class="new-badge">NEW</span>' : ''}
+                                ${auth.currentUser && auth.currentUser.uid === review.userId ? '<span class="delete-btn" onclick="event.stopPropagation(); deleteReview(\'' + doc.id + '\')">삭제</span>' : ''}
+                                <button class="recommend-button" onclick="recommendReview('${doc.id}')">추천</button>
+                                <span class="recommend-count" id="recommendCount-${doc.id}">${review.recommendations}</span>
+                            </div>
+                            <p>${review.content}</p>
+                        </div>
+                    </div>
                 `;
             });
 
@@ -153,7 +201,7 @@
 
             const querySnapshot = await getDocs(reviewsQuery);
 
-            querySnapshot.forEach((doc, index) => {
+            querySnapshot.forEach((doc) => {
                 const review = doc.data();
                 const reviewDate = new Date(review.timestamp.seconds * 1000);
                 const now = new Date();
@@ -161,17 +209,19 @@
                 const isNew = timeDiff / (1000 * 3600) < 24; // 24시간 이내의 리뷰는 NEW 배지 표시
 
                 reviewsContainer.innerHTML += `
-                    <tr>
-                        <th scope="row">${index + 1}</th>
-                        <td><a href="#" onclick="showReviewDetails('${doc.id}')">${review.title}</a> ${isNew ? '<span class="new-badge">NEW</span>' : ''}</td>
-                        <td>
-                            <img src="${review.userPhoto}" class="profile-picture" alt="프로필 사진"> 
-                            ${review.userName}
-                        </td>
-                        <td>${reviewDate.toLocaleDateString()}</td>
-                        <td>${review.views || 0}</td>
-                        <td>${auth.currentUser.uid === review.userId ? '<span class="delete-btn" onclick="event.stopPropagation(); deleteReview(\'' + doc.id + '\')">삭제</span>' : ''}</td>
-                    </tr>
+                    <div class="review-container">
+                        <div class="review-content">
+                            <div class="d-flex align-items-center mb-2">
+                                <img src="${review.userPhoto}" class="profile-picture" alt="프로필 사진">
+                                <span class="username">${review.userName}</span>
+                                ${isNew ? '<span class="new-badge">NEW</span>' : ''}
+                                ${auth.currentUser && auth.currentUser.uid === review.userId ? '<span class="delete-btn" onclick="event.stopPropagation(); deleteReview(\'' + doc.id + '\')">삭제</span>' : ''}
+                                <button class="recommend-button" onclick="recommendReview('${doc.id}')">추천</button>
+                                <span class="recommend-count" id="recommendCount-${doc.id}">${review.recommendations}</span>
+                            </div>
+                            <p>${review.content}</p>
+                        </div>
+                    </div>
                 `;
             });
 
@@ -184,71 +234,63 @@
             const reviewsQuery = query(
                 collection(db, 'reviews'),
                 orderBy('timestamp', 'desc'),
-                endBefore(firstVisibleReview),
-                limitToLast(pageSize + 1)
+                endBefore(lastVisibleReview),
+                limitToLast(pageSize)
             );
 
             const querySnapshot = await getDocs(reviewsQuery);
 
-            const reviews = [];
             querySnapshot.forEach((doc) => {
-                reviews.push({ id: doc.id, data: doc.data() });
-            });
-            // 현재 페이지의 첫 번째 리뷰를 삭제하고 업데이트합니다.
-            reviews.shift();
-
-            // 리뷰 목록을 업데이트합니다.
-            reviewsContainer.innerHTML = '';
-            reviews.forEach((review, index) => {
-                const reviewData = review.data;
-                const reviewDate = new Date(reviewData.timestamp.seconds * 1000);
+                const review = doc.data();
+                const reviewDate = new Date(review.timestamp.seconds * 1000);
                 const now = new Date();
                 const timeDiff = Math.abs(now - reviewDate);
                 const isNew = timeDiff / (1000 * 3600) < 24; // 24시간 이내의 리뷰는 NEW 배지 표시
 
                 reviewsContainer.innerHTML += `
-                    <tr>
-                        <th scope="row">${index + 1}</th>
-                        <td><a href="#" onclick="showReviewDetails('${review.id}')">${reviewData.title}</a> ${isNew ? '<span class="new-badge">NEW</span>' : ''}</td>
-                        <td>
-                            <img src="${reviewData.userPhoto}" class="profile-picture" alt="프로필 사진"> 
-                            ${reviewData.userName}
-                        </td>
-                        <td>${reviewDate.toLocaleDateString()}</td>
-                        <td>${reviewData.views || 0}</td>
-                        <td>${auth.currentUser.uid === reviewData.userId ? '<span class="delete-btn" onclick="event.stopPropagation(); deleteReview(\'' + review.id + '\')">삭제</span>' : ''}</td>
-                    </tr>
+                    <div class="review-container">
+                        <div class="review-content">
+                            <div class="d-flex align-items-center mb-2">
+                                <img src="${review.userPhoto}" class="profile-picture" alt="프로필 사진">
+                                <span class="username">${review.userName}</span>
+                                ${isNew ? '<span class="new-badge">NEW</span>' : ''}
+                                ${auth.currentUser && auth.currentUser.uid === review.userId ? '<span class="delete-btn" onclick="event.stopPropagation(); deleteReview(\'' + doc.id + '\')">삭제</span>' : ''}
+                                <button class="recommend-button" onclick="recommendReview('${doc.id}')">추천</button>
+                                <span class="recommend-count" id="recommendCount-${doc.id}">${review.recommendations}</span>
+                            </div>
+                            <p>${review.content}</p>
+                        </div>
+                    </div>
                 `;
             });
 
             lastVisibleReview = querySnapshot.docs[querySnapshot.docs.length - 1];
         };
 
-        const showReviewDetails = async (reviewId) => {
-            const reviewDoc = await getDoc(doc(db, 'reviews', reviewId));
-            const review = reviewDoc.data();
-
-            if (review) {
-                window.location.href = `review_detail.html?reviewId=${reviewId}`;
-            } else {
-                alert('리뷰를 불러오는 데 실패했습니다.');
-            }
-        };
-
         window.deleteReview = async (reviewId) => {
-            if (!confirm('리뷰를 삭제하시겠습니까?')) return;
-
-            try {
+            if (confirm('정말로 이 리뷰를 삭제하시겠습니까?')) {
                 await deleteDoc(doc(db, 'reviews', reviewId));
+                alert('리뷰가 삭제되었습니다.');
                 loadReviews(pageSize);
-            } catch (error) {
-                console.error('리뷰 삭제 실패:', error);
+                loadTopRecommendedReviews(); // 추천 리뷰도 다시 로드
             }
         };
+
+        window.recommendReview = async (reviewId) => {
+    const reviewDoc = doc(db, 'reviews', reviewId);
+    const reviewData = (await getDoc(reviewDoc)).data();
+    const newRecommendations = reviewData.recommendations + 1;
+
+    await updateDoc(reviewDoc, { recommendations: newRecommendations });
+
+    document.getElementById(`recommendCount-${reviewId}`).textContent = newRecommendations;
+};
+
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 loadReviews(pageSize);
+                loadTopRecommendedReviews();
             } else {
                 alert('로그인이 필요합니다.');
                 window.location.href = 'login.html';
@@ -257,4 +299,3 @@
     </script>
 </body>
 </html>
-
