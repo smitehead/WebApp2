@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대한민국 국내 여행지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #E0E7FF 30%, #ffe7e7 70%);
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            background-color: #ffe7e7;
+            width: 100%;
+            height: 20px;
+        }
+        header {
+            background-color: #FFFFFF;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .title-container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .title-container h2, .title-container p {
+            margin: 0;
+        }
+        .region-list {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+            justify-content: flex-start;
+        }
+        .region-item {
+            text-align: center;
+        }
+        .region-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 5px;
+        }
+        .region-item p {
+            margin: 0;
+        }
+        .card-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            justify-content: flex-start;
+        }
+        .card {
+            flex: 1;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            border: 1px solid #000; /* Black border */
+            width: 250px; /* 상자의 너비를 200px로 설정 */
+            height: 250px;
+        }
+        .card h3 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+        .card p {
+            margin-top: 10px;
+            color: #666;
+        }
+        .card a {
+            display: block;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            justify-content: center;
+            text-align: left;
+        }
+        .grid-item {
+            background-color: #ffffff;
+            padding: 10px; 
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 180px; 
+            height: 180px;
+        }
+        .grid-item img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .grid-item h3 {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        .grid-item p {
+            color: #666;
+        }
+        .hotspot-title {
+            text-align: left;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <p style="font-weight: bold; font-size: 20px; color: rgb(118, 211, 248);">대한민국 투어플레이스</p>
+        <nav>
+            <a href="#">테마</a>
+            <a href="#">지역</a>
+            <a href="#">여행정보</a>
+            <a href="#">여행지도</a>
+        </nav>
+        <div>
+            <input type="text" placeholder="어디로 여행을 떠날 예정인가요?">
+        </div>
+    </header>
+    <div class="container">
+        <div class="title-container">
+            <div>
+                <h2 style="font-weight: bold; background-color: slateblue; color: whitesmoke;">대한민국 국내여행 정보</h2>
+                <P style="font-size: 24px; font-weight: bold;">축제부터 관광지까지!</p>
+            </div>
+        </div>
+        <div class="region-list">
+            <div class="region-item">
+                <img src="서울.png" alt="서울">
+                <p>서울</p>
+            </div>
+            <div class="region-item">
+                <img src="인천.png" alt="인천">
+                <p>인천</p>
+            </div>
+            <div class="region-item">
+                <img src="대전.png" alt="대전">
+                <p>대전</p>
+            </div>
+            <div class="region-item">
+                <img src="대구.png" alt="대구">
+                <p>대구</p>
+            </div>
+            <div class="region-item">
+                <img src="부산.png" alt="부산">
+                <p>부산</p>
+            </div>
+            <div class="region-item">
+                <img src="울산.png" alt="울산">
+                <p>울산</p>
+            </div>
+            <div class="region-item">
+                <img src="광주.png" alt="광주">
+                <p>광주</p>
+            </div>
+            <div class="region-item">
+                <img src="제주.png" alt="제주">
+                <p>제주</p>
+            </div>
+            <div class="region-item">
+                <img src="강원.png" alt="강원">
+                <p>강원</p>
+            </div>
+            <div class="region-item">
+                <img src="경기.png" alt="경기">
+                <p>경기</p>
+            </div>
+            <div class="region-item">
+                <img src="충남.png" alt="충남">
+                <p>충남</p>
+            </div>
+            <div class="region-item">
+                <img src="충북.png" alt="충북">
+                <p>충북</p>
+            </div>
+            <div class="region-item">
+                <img src="경북.png" alt="경북">
+                <p>경북</p>
+            </div>
+            <div class="region-item">
+                <img src="경남.png" alt="경남">
+                <p>경남</p>
+            </div>
+            <div class="region-item">
+                <img src="전북.png" alt="전북">
+                <p>전북</p>
+            </div>
+            <div class="region-item">
+                <img src="전남.png" alt="전남">
+                <p>전남</p>
+            </div>
+        </div>
+        <section>
+            <div class="section-title">
+                <h2>울산</h2>
+                <a href="https://example.com">울산 지역 문화관광 홈페이지 바로가기</a>
+            </div>
+            <div class="card-container">
+                <div class="card">
+                    <h3>유케이션! (U-Cation)</h3>
+                    <p>울산의 숨겨진 매력을 도시 탐험 형식으로 즐기는 여행</p>
+                    <a href="#">자세히 보기</a>
+                </div>
+                <div class="card">
+                    <h3>북구 도읍암</h3>
+                    <p>자연과 부드러운 여행담을 지닌 도읍암을 따라 떠나는 여행</p>
+                    <a href="#">자세히 보기</a>
+                </div>
+                <div class="card">
+                    <h3>울산대교 전망대</h3>
+                    <p>울산의 화려한 전경과 바다를 한 눈에 볼 수 있는 전망대</p>
+                    <a href="#">자세히 보기</a>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="hotspot-title">우리나라에 이런 곳이?</h2>
+            <h3>울산 추천 여행지</h3>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <img src="추천여행지1.png" alt="장생포고래문화마을">
+                    <h3>장생포고래문화마을</h3>
+                    <p>울산광역시 남구</p>
+                </div>
+                <div class="grid-item">
+                    <img src="추천여행지2.png" alt="신라수련원">
+                    <h3>신라수련원</h3>
+                    <p>울산광역시 중구</p>
+                </div>
+                <div class="grid-item">
+                    <img src="추천여행지3.png" alt="주전몽돌해변">
+                    <h3>주전몽돌해변</h3>
+                    <p>울산광역시 동구</p>
+                </div>
+                <div class="grid-item">
+                    <img src="추천여행지4.png" alt="울산테라스">
+                    <h3>울산테라스</h3>
+                    <p>울산광역시 중구</p>
+                </div>
+            </div>
+
+            <h3>울산 추천 맛집</h3>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <img src="맛집1.png" alt="이포">
+                    <h3>이포</h3>
+                    <p>울산광역시 북구</p>
+                </div>
+                <div class="grid-item">
+                    <img src="맛집2.png" alt="용이해물탕">
+                    <h3>용이해물탕</h3>
+                    <p>울산광역시 중구</p>
+                </div>
+                <div class="grid-item">
+                    <img src="맛집3.png" alt="해마인">
+                    <h3>해마인</h3>
+                    <p>울산광역시 남구</p>
+                </div>
+                <div class="grid-item">
+                    <img src="맛집4.png" alt="소이밀푀유나베">
+                    <h3>소이밀푀유나베</h3>
+                    <p>울산광역시 남구</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer></footer>
+</body>
+</html>
+
