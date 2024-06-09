@@ -8,23 +8,27 @@
     <!--메뉴바 폰트-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">    
-    <title>웹페이지 이름 미정</title>
-
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .container {
+            margin-top: 20px;
+        }
         .review-container {
             margin-bottom: 15px;
         }
         .review-content {
-            border: 1px solid #dee2e6;
-            padding: 15px;
+            border: 1px solid #ccc;
+            padding: 10px;
             border-radius: 5px;
-            background-color: #f8f9fa;
+            position: relative;
         }
         .profile-picture {
-            width: 30px;
-            height: 30px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             object-fit: cover;
             margin-right: 10px;
@@ -32,21 +36,19 @@
         .username {
             font-weight: bold;
         }
-        .new-badge {
-            color: red;
-            font-weight: bold;
-            margin-left: 10px;
-        }
         .delete-btn {
             color: red;
             cursor: pointer;
-            float: right;
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
         .pagination {
             justify-content: center;
+            margin-top: 20px;
         }
         .recommend-button {
-            background-color: #ffc107;
+            background-color: #007bff;
             color: white;
             border: none;
             padding: 5px 10px;
@@ -62,10 +64,9 @@
             margin-bottom: 20px;
         }
         .fixed-review-item {
-            border: 1px solid #ffc107;
-            padding: 15px;
+            border: 2px solid #007bff;
+            padding: 10px;
             border-radius: 5px;
-            background-color: #fff3cd;
             margin-bottom: 10px;
         }
     </style>
@@ -82,7 +83,6 @@
             <li><a href="">리뷰</a></li>
             <li><a href="">행사</a></li>
         </div>
-        <!-- 로그인 페이지로 이동 -->
         <a href="" class="menubar__login">
             <i class="fa-solid fa-user"></i>
         </a>
@@ -95,7 +95,7 @@
 
         <!-- 고정된 추천 리뷰 섹션 -->
         <div id="topRecommendedReviews" class="fixed-reviews-container">
-            <h2 class="text-center">추천 리뷰</h2>
+            <h2>추천 리뷰</h2>
             <div id="recommendedReviewList"></div>
         </div>
 
@@ -114,7 +114,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, collection, query, getDocs, orderBy, limit, startAfter, endBefore, limitToLast, doc, deleteDoc, updateDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getFirestore, collection, query, getDocs, orderBy, limit, startAfter, endBefore, limitToLast, doc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDQI-YZlvaxuAs0ZXWY4YXrJsqAzlGBEa0",
@@ -133,10 +133,13 @@
 
         let lastVisibleReview = null;
         let firstVisibleReview = null;
+        let reviewsCache = []; // 페이지별로 첫 번째와 마지막 리뷰 문서의 캐시
         const reviewsContainer = document.getElementById('reviewsContainer');
         const recommendedReviewList = document.getElementById('recommendedReviewList');
         const pagination = document.getElementById('pagination');
         const pageSize = 10; // 한 페이지에 보여줄 리뷰 수
+        let currentPage = 1; // 현재 페이지
+        let totalReviews = 0; // 총 리뷰 수
 
         // 추천 리뷰를 로드하는 함수
         const loadTopRecommendedReviews = async () => {
@@ -165,31 +168,30 @@
             });
         };
 
+        // 총 리뷰 수를 가져오는 함수
+        const getTotalReviews = async () => {
+            const totalReviewsQuery = await getDocs(query(collection(db, 'reviews')));
+            totalReviews = totalReviewsQuery.docs.length;
+        };
+
         // 리뷰 목록을 로드하는 함수
-        const loadReviews = async (pageSize = 10, direction = 'next') => {
+        const loadReviews = async (page = 1) => {
             reviewsContainer.innerHTML = '';
-            pagination.innerHTML = '';
 
             let reviewsQuery;
 
-            if (direction === 'next' && lastVisibleReview) {
+            if (page === 1) {
                 reviewsQuery = query(
                     collection(db, 'reviews'),
                     orderBy('timestamp', 'desc'),
-                    startAfter(lastVisibleReview),
                     limit(pageSize)
                 );
-            } else if (direction === 'previous' && firstVisibleReview) {
-                reviewsQuery = query(
-                    collection(db, 'reviews'),
-                    orderBy('timestamp', 'desc'),
-                    endBefore(firstVisibleReview),
-                    limitToLast(pageSize)
-                );
             } else {
+                const startAfterDoc = reviewsCache[page - 2].last;
                 reviewsQuery = query(
                     collection(db, 'reviews'),
                     orderBy('timestamp', 'desc'),
+                    startAfter(startAfterDoc),
                     limit(pageSize)
                 );
             }
@@ -203,87 +205,82 @@
             firstVisibleReview = querySnapshot.docs[0];
             lastVisibleReview = querySnapshot.docs[querySnapshot.docs.length - 1];
 
+            // 캐시에 페이지별 첫 번째와 마지막 리뷰 문서 저장
+            reviewsCache[page - 1] = {
+                first: firstVisibleReview,
+                last: lastVisibleReview
+            };
+
             querySnapshot.forEach((doc) => {
                 const review = doc.data();
-                const reviewDate = new Date(review.timestamp.seconds * 1000);
-                const now = new Date();
-                const timeDiff = Math.abs(now - reviewDate);
-                const isNew = timeDiff / (1000 * 3600) < 24; // 24시간 이내의 리뷰는 NEW 배지 표시
-
-                reviewsContainer.innerHTML += `
-                    <div class="review-container">
-                        <div class="review-content">
-                            <div class="d-flex align-items-center mb-2">
-                                <img src="${review.userPhoto}" class="profile-picture" alt="프로필 사진">
-                                <span class="username">${review.userName}</span>
-                                ${isNew ? '<span class="new-badge">NEW</span>' : ''}
-                                ${auth.currentUser && auth.currentUser.uid === review.userId ? '<span class="delete-btn" onclick="event.stopPropagation(); deleteReview(\'' + doc.id + '\')">삭제</span>' : ''}
-                                <button class="recommend-button" onclick="recommendReview('${doc.id}')">추천</button>
-                                <span class="recommend-count" id="recommendCount-${doc.id}">${review.recommendations}</span>
-                            </div>
+                const reviewElement = document.createElement('div');
+                reviewElement.className = 'review-container';
+                reviewElement.innerHTML = `
+                    <div class="review-content d-flex">
+                        <img src="${review.userPhoto}" class="profile-picture" alt="프로필 사진">
+                        <div>
+                            <div class="username">${review.userName}</div>
                             <p>${review.content}</p>
                         </div>
+                        <button class="delete-btn btn btn-link">삭제</button>
                     </div>
                 `;
-            });
 
-            // 페이지네이션 버튼 업데이트
-            pagination.innerHTML += `
-                <li class="page-item ${!firstVisibleReview ? 'disabled' : ''}">
-                    <a class="page-link" href="#" aria-label="Previous" onclick="loadReviews(${pageSize}, 'previous')">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#" onclick="loadReviews(${pageSize}, 'next')">Next</a>
-                </li>
-            `;
-        };
-
-        // 리뷰 삭제 함수
-        window.deleteReview = async (reviewId) => {
-            const reviewDoc = doc(db, 'reviews', reviewId);
-            await deleteDoc(reviewDoc);
-            loadReviews(pageSize, 'next');
-        };
-
-        // 추천 기능
-        window.recommendReview = async (reviewId) => {
-            const userId = auth.currentUser.uid;
-            const reviewDoc = doc(db, 'reviews', reviewId);
-            const reviewData = (await getDoc(reviewDoc)).data();
-
-            const userRecommendationRef = doc(db, 'review_recommendations', `${userId}_${reviewId}`);
-            const userRecommendationDoc = await getDoc(userRecommendationRef);
-
-            if (userRecommendationDoc.exists()) {
-                alert('이미 이 리뷰를 추천했습니다.');
-            } else {
-                const newRecommendations = reviewData.recommendations + 1;
-
-                // 리뷰의 추천수를 업데이트
-                await updateDoc(reviewDoc, { recommendations: newRecommendations });
-
-                // 사용자가 이 리뷰를 추천했다는 기록 추가
-                await setDoc(userRecommendationRef, {
-                    userId: userId,
-                    reviewId: reviewId,
-                    timestamp: new Date()
+                // 삭제 버튼에 이벤트 리스너 추가
+                const deleteButton = reviewElement.querySelector('.delete-btn');
+                deleteButton.addEventListener('click', async () => {
+                    await deleteDoc(doc.ref);
+                    loadReviews(currentPage); // 현재 페이지 다시 로드
                 });
 
-                // 추천 카운트 업데이트
-                document.getElementById(`recommendCount-${reviewId}`).textContent = newRecommendations;
+                reviewsContainer.appendChild(reviewElement);
+            });
+
+            updatePagination(page);
+        };
+
+        // 페이지네이션 업데이트
+        const updatePagination = (currentPage) => {
+            pagination.innerHTML = '';
+
+            const totalPages = Math.ceil(totalReviews / pageSize);
+
+            // 이전 페이지 버튼
+            if (currentPage > 1) {
+                const prevPageItem = document.createElement('li');
+                prevPageItem.className = 'page-item';
+                prevPageItem.innerHTML = `<a class="page-link" href="#">이전</a>`;
+                prevPageItem.addEventListener('click', () => loadReviews(currentPage - 1));
+                pagination.appendChild(prevPageItem);
+            }
+
+            // 페이지 번호 버튼
+            for (let i = 1; i <= totalPages; i++) {
+                const pageItem = document.createElement('li');
+                pageItem.className = 'page-item' + (i === currentPage ? ' active' : '');
+                pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                pageItem.addEventListener('click', () => loadReviews(i));
+                pagination.appendChild(pageItem);
+            }
+
+            // 다음 페이지 버튼
+            if (currentPage < totalPages) {
+                const nextPageItem = document.createElement('li');
+                nextPageItem.className = 'page-item';
+                nextPageItem.innerHTML = `<a class="page-link" href="#">다음</a>`;
+                nextPageItem.addEventListener('click', () => loadReviews(currentPage + 1));
+                pagination.appendChild(nextPageItem);
             }
         };
 
-        // 초기 리뷰 및 추천 리뷰 로드
-        onAuthStateChanged(auth, (user) => {
+        // 사용자 로그인 상태 확인 및 리뷰 로드
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                loadReviews(pageSize, 'next');
-                loadTopRecommendedReviews();
+                await loadTopRecommendedReviews();
+                await getTotalReviews();
+                await loadReviews();
             } else {
-                alert('로그인이 필요합니다.');
-                window.location.href = 'login.html';
+                window.location.href = 'login.html'; // 로그인하지 않은 경우 로그인 페이지로 리디렉션
             }
         });
     </script>
