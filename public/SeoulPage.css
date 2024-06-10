@@ -3,14 +3,28 @@
     background-image: url("media/busan.jpg");
 }
 .title {
+    position: relative;
+    left: 15px;
     color : rgb(214, 228, 240);
 }
 .title p {
     font-size : 70px;
 }
+.contents1 span {
+    font-size : 45px;
+    font-weight: 400;
+}
+.contents2 span {
+    font-size : 45px;
+    font-weight: 400;
+}
+.contents3 span {
+    font-size : 45px;
+    font-weight: 400;
+}
 .contents_wrap {
     border:1px solid black;
-    height: 2330px;
+    height: 2370px;
     margin-top:50px;
     background-color: rgb(214, 228, 240);
     border-radius: 5px;
