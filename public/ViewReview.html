@@ -69,6 +69,9 @@
             border-radius: 5px;
             margin-bottom: 10px;
         }
+        .write-review-button {
+            margin-left: auto;
+        }
     </style>
 </head>
 <body>
@@ -83,6 +86,7 @@
             <li><a href="">리뷰</a></li>
             <li><a href="">행사</a></li>
         </div>
+        <a href="ReviewPage.html" class="btn btn-primary write-review-button">리뷰 쓰기</a>
         <a href="" class="menubar__login">
             <i class="fa-solid fa-user"></i>
         </a>
@@ -114,7 +118,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, collection, query, getDocs, orderBy, limit, startAfter, endBefore, limitToLast, doc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getFirestore, collection, query, getDocs, orderBy, limit, startAfter, endBefore, limitToLast, doc, deleteDoc, getDoc, setDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDQI-YZlvaxuAs0ZXWY4YXrJsqAzlGBEa0",
@@ -140,6 +144,7 @@
         const pageSize = 10; // 한 페이지에 보여줄 리뷰 수
         let currentPage = 1; // 현재 페이지
         let totalReviews = 0; // 총 리뷰 수
+        let currentUser = null; // 현재 사용자
 
         // 추천 리뷰를 로드하는 함수
         const loadTopRecommendedReviews = async () => {
@@ -172,6 +177,15 @@
         const getTotalReviews = async () => {
             const totalReviewsQuery = await getDocs(query(collection(db, 'reviews')));
             totalReviews = totalReviewsQuery.docs.length;
+        };
+
+        // 추천을 업데이트하는 함수
+        const updateRecommendations = async (reviewId, recommendations) => {
+            const reviewRef = doc(db, 'reviews', reviewId);
+            await updateDoc(reviewRef, {
+                recommendations: recommendations,
+                recommendedBy: arrayUnion(currentUser.uid) // 현재 사용자를 추천자 목록에 추가
+            });
         };
 
         // 리뷰 목록을 로드하는 함수
@@ -221,10 +235,23 @@
                         <div>
                             <div class="username">${review.userName}</div>
                             <p>${review.content}</p>
+                            <button class="recommend-button">추천</button>
+                            <span class="recommend-count">추천: ${review.recommendations}</span>
                         </div>
                         <button class="delete-btn btn btn-link">삭제</button>
                     </div>
                 `;
+
+                // 추천 버튼에 이벤트 리스너 추가
+                const recommendButton = reviewElement.querySelector('.recommend-button');
+                recommendButton.addEventListener('click', async () => {
+                    if (!review.recommendedBy || !review.recommendedBy.includes(currentUser.uid)) {
+                        await updateRecommendations(doc.id, review.recommendations + 1);
+                        loadReviews(currentPage); // 현재 페이지 다시 로드
+                    } else {
+                        alert('이미 추천하셨습니다.');
+                    }
+                });
 
                 // 삭제 버튼에 이벤트 리스너 추가
                 const deleteButton = reviewElement.querySelector('.delete-btn');
@@ -276,6 +303,7 @@
         // 사용자 로그인 상태 확인 및 리뷰 로드
         onAuthStateChanged(auth, async (user) => {
             if (user) {
+                currentUser = user; // 현재 사용자 설정
                 await loadTopRecommendedReviews();
                 await getTotalReviews();
                 await loadReviews();
