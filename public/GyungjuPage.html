@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="menubar.css">
+    <link rel="stylesheet" type="text/css" href="FivePage.css">
+    <!--메뉴바 폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">    <title>웹페이지 이름 미정</title>
+
+    <title>Document</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQI-YZlvaxuAs0ZXWY4YXrJsqAzlGBEa0",
+            authDomain: "loginweb-4a1a6.firebaseapp.com",
+            projectId: "loginweb-4a1a6",
+            storageBucket: "loginweb-4a1a6.appspot.com",
+            messagingSenderId: "47986024855",
+            appId: "1:47986024855:web:6f5d2c1c6457269871e4d2",
+            measurementId: "G-2159KP57E5"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth();
+    
+        document.getElementById('logoutButton').addEventListener('click', (event) => {
+            event.preventDefault();
+            signOut(auth).then(() => {
+                alert('로그아웃 성공!');
+                window.location.href = 'index.html'; // 로그인 페이지로 리디렉션
+            }).catch((error) => {
+                alert('로그아웃 실패: ' + error.message);
+                console.error('로그아웃 실패', error);
+            });
+        });
+    </script>
+</head>
+<body>
+    <nav class="menubar">
+        <div class="menubar__logo">
+            <i class="fa-solid fa-person-walking-luggage"></i>
+            <a href="main.html">사이트이름</a>
+        </div>
+        <div class="menubar__menu">
+            <li><a href="">여행지</a></li>
+            <li><a href="">길찾기</a></li>
+            <li><a href="ViewReview.html">리뷰</a></li>
+            <li><a href="">행사</a></li>
+        </div>
+        <div class="menubar__search">
+            
+        </div>
+        <!-- 로그인 페이지로 이동 -->
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNpAyn3OS4mRpLpEeOuqeteok3pt9zEfaLhg&s" alt="" id="logoutButton" width="25" height="25">
+        <a href="ProfileCheck.html" class="menubar__login">
+            <i class="fa-solid fa-user"></i>
+        <a href="ProfileCheck.html" class="menubar__toggleBtn">
+            <i class="fa-solid fa-bars"></i>
+        </a>
+      </nav>
+      <div class="container" style="background-image: url(media/GyungjuBG.jpeg);">
+        <div class="title">
+            <p style="font-weight: 300;">경주</p><br>
+            <h3 style="font-weight: 200;">대한민국 동쪽에 위치한 역사와 문화가 풍부한 도시<br> 
+                세계유산으로 등재된 불교 유적지와 국보급 유물들이 풍부하게 보존</h3><br>
+        </div>
+      <section>
+        <div class="contents_wrap">
+            <div class="contents_title">
+                <h2 style="font-weight: 400;">경주의 여행지</h2><br><br>
+            </div>
+
+            <div class="contents1">
+            <div class="contents1_title">
+                <h3 style="font-weight: 400;">1. 첨성대</h3>
+            </div>
+            <div class="contents1_1">
+        <div class="contents1_image1">
+            <img src="media/첨성대1.jpg" alt="첨성대1">
+        </div>
+        <div class="contents1_ment1">
+            <p style="font-weight: 300;"><span>첨성대</span>는 대한민국 경주에 위치한
+                 고대 신라 왕국의 천문대로, 세계 문화유산에 등재된 중요한 역사적 유적지 
+                 중 하나입니다. 신라 시대인 7세기에 건립된 이 첨성대는 당시 신라 왕실의 
+                 천문학적 연구와 관측을 위해 사용되었습니다. 그 당시 첨성대는 천체의 움직
+                 임을 관찰하고, 계절과 농사 시기를 예측하는 등의 기능을 수행하며, 국가의
+                  정책과 생활에 큰 영향을 미쳤습니다. 이후 첨성대는 여러 차례의 수리와 보수
+                   과정을 거치면서 그 모습을 완전히 갖추게 되었습니다. 현재 우리가 볼 수 
+                   있는 첨성대는 복원된 모습으로, 원래의 모습과 유사하게 재건축되었습니다.
+                    이 곳은 신라시대의 과학 기술과 문화를 엿볼 수 있는 소중한 장소로, 많은
+                     관광객과 연구자들이 방문하고 있습니다</p>
+        </div>
+        </div>
+        <div class="contents1_2">
+        <div class="contents1_image2">
+            <img src="media/첨성대2.jpg" alt="첨성대2">
+        </div>
+        <div class="contents1_ment2">
+            <p style="font-weight: 300;">첨성대 주변에는 신라 왕족들의 묘역인 대릉원과 함께,
+                 고대 신라의 역사와 문화를 보존하고 있는 다양한 유적지가 있습니다. 이러한 역
+                 사적 가치와 함께 아름다운 자연경관이 어우러져, 경주를 대표하는 관광 명소로 
+                 자리매김하고 있습니다. 함께 해바라기와 호박꽃이 활짝 피는 첨성대 주변은 방문
+                 객들에게 아름다운 추억을 선사합니다.</p>
+        </div>
+        </div>
+    </div>
+
+        <div class="contents2">
+            <div class="contents2_title">
+                <h3 style="font-weight: 400;">2. 동궁과 월지</h3>
+            </div>
+            <div class="contents2_1">
+        <div class="contents2_image1">
+            <img src="media/동궁과월지1.jpg" alt="동궁1">
+        </div>
+        <div class="contents2_ment1">
+            <p style="font-weight: 300;"><span>동궁과 월지</span>는 대한민국 경주에 위치한 
+                고대 신라 왕국의 궁궐과 정원으로, 세계 문화유산에 등재된 중요한 역사적 유적지
+                입니다. 신라 왕실의 거처로서 사용되었던 동궁은 당시 왕의 거처와 행사장으로 사
+                용되었으며, 왕실의 중요한 사건들이 열렸던 장소였습니다. 월지는 동궁 근처에 위
+                치한 아름다운 연못과 정원으로, 신라시대의 월광 달빛 아래에서 왕실의 휴식과 행
+                사가 이루어졌던 장소로 알려져 있습니다. 동궁과 월지는 신라시대의 정교한 건축 
+                기술과 예술적 창의력을 대표하는 유적으로, 그 당시의 사회와 문화를 엿볼 수 있는 소중한 자료입니다. </p>
+        </div>
+        </div>
+        <div class="contents2_2">
+        <div class="contents2_image2">
+            <img src="media/동궁과월지2.jpg" alt="동궁2">
+        </div>
+        <div class="contents2_ment2">
+            <p style="font-weight: 300;">동궁은 원래의 모습을 대부분 복원하여 현재에 전시되고 있으며,
+                 월지는 아름다운 연못과 정원이 남아 있어 관광객들의 찾는 장소입니다.​
+                 동궁과 월지 주변에는 신라 왕족들의 묘역인 대릉원과 함께, 경주의 다양한 
+                 역사적 유적지가 있어 관광객들에게 다양한 경험을 제공합니다. 이곳은 고대
+                  신라의 문화와 예술, 건축 기술을 이해하는 데 중요한 역할을 하며, 한국의
+                   역사와 문화를 연구하고자 하는 사람들에게 귀중한 자료를 제공합니다. 함께 
+                   해마다 봄에는 연꽃이 피는 월지와 함께 경주의 아름다운 자연경관을 만끽할 수 있습니다.
+                </p>
+        </div>
+        </div>
+    </div>
+
+        <div class="contents3">
+            <div class="contents3_title">
+                <h3 style="font-weight: 400;">3. 불국사</h3>
+            </div>
+            <div class="contents3_1">
+        <div class="contents3_image1">
+            <img src="media/불국사1.jpg" alt="불국사1">
+        </div>
+        <div class="contents3_ment1">
+            <p style="font-weight: 300;"><span>불국사</span>는 고대 신라 왕국의 대표적인 불교 사찰로,
+                 세계 유산으로 등재된 역사적인 유적지 중 하나입니다. 이 사찰은 신라 시대에 지어진 세계 
+                 최대 규모의 석가탑인 대불을 비롯하여 다양한 불교 미술 작품과 유물이 보존되어 있습니다.
+                  대불은 불국사의 대표적인 건축물로, 전체 높이가 80미터가 넘는 아시아 최대의 목탑입니다.
+                  불국사는 고려시대에 화재로 인해 파괴되었으나, 고려 후기에 재건되어 현재까지 그 모습을 
+                  간직하고 있습니다. 불국사 사적지대는 석탑과 함께 신라 문화의 특징을 잘 보여주는 예술적 
+                  유산으로, 많은 관광객들과 연구자들이 찾는 장소입니다. </p>
+        </div>
+        </div>
+        <div class="contents3_2">
+        <div class="contents3_image2">
+            <img src="media/불국사2.jpg" alt="불국사2">
+        </div>
+        <div class="contents3_ment2">
+            <p style="font-weight: 300;">불국사는 불교 문화와 예술의 중요성을 알리는 데 기여하며,
+                 한국의 역사와 문화를 보존하고 발전시키는 데 큰 역할을 합니다.
+                 불국사는 불교 사찰 중에서도 특히 중요한 역사적 가치를 지니고 있어,
+                  매년 수많은 관광객들과 신앙하는 사람들이 찾는 명소입니다. 불국사는
+                   세계 유산으로 등재되어 있으며, 한국을 대표하는 문화유산으로 인정받고 
+                   있습니다. 함께 이곳을 방문하면 신라 왕조의 역사와 불교 문화에 대해 깊이 있는 이해를 할 수 있습니다.</p>
+        </div>
+        </div>
+    </div>
+    </div>
+      </section>
+
+      <section>
+        <div class="food_allwrap">
+        <div class="food_title">
+        <h2 style="font-weight: 400;">맛집</h2><br></div>
+        <div class="food_wrap">
+            <div class="food">
+                <img src="media/경주맛집1.jpeg" alt="맛집">
+                <h2>향화정</h2>
+                <p style="font-weight: 300;">경주시 사정로</p>
+            </div>
+            <div class="food">
+                <img src="media/경주맛집2.jpeg" alt="맛집">
+                <h2>소옥</h2>
+                <p style="font-weight: 300;">경주시 포석로</p>
+            </div>
+            <div class="food">
+                <img src="media/경주맛집3.jpeg" alt="맛집">
+                <h2>대릉갈비</h2>
+                <p style="font-weight: 300;">경주시 포석로</p>
+            </div>
+            <div class="food">
+                <img src="media/경주맛집4.jpeg" alt="맛집">
+                <h2>황남빵</h2>
+                <p style="font-weight: 300;">경주시 태종로</p>
+            </div>
+            <div class="food">
+                <img src="media/경주맛집5.png" alt="맛집">
+                <h2>황남비빔밥</h2>
+                <p style="font-weight: 300;">경주시 첨성로</p>
+            </div>
+            <div class="food">
+                <img src="media/경주맛집6.jpeg" alt="맛집">
+                <h2>소바카게</h2>
+                <p style="font-weight: 300;">경주시 첨성로</p>
+            </div>
+        </div>
+    </div>
+      </section>
+
+      <section>
+        <div class="festival_wrap">
+            <div class="festival_title">
+                <h2 style="font-weight: 400;">경주의 행사</h2><br>
+            </div>
+            <div class="festivals">
+            <div class="festival1">
+        <div class="festival1_image">
+            <img src="media/경주행사1.jpg" alt="행사1">
+        </div>
+        <div class="festival1_ment">
+            <h2>경주세계문화엑스포</h2><br>
+            <p style="font-weight: 300;">경주세계문화엑스포는 경주에서 매년 개최되는 대규모 문화 행사로,
+                 국제적인 문화 교류와 이해 촉진을 목적으로 합니다. 이 행사는 다양한 문화와 예술 행사, 전시,
+                  공연, 체험 프로그램 등이 풍성하게 준비되어 있습니다. 국내외 다양한 문화단체와 예술가들이
+                   참여하여 경주를 문화적인 중심지로 만들어 줍니다. 세계 각국의 문화를 경험하고 교류할 수 
+                   있는 소중한 기회를 제공하여 관광객들에게 많은 인기를 끌고 있습니다. 이 행사는 경주의 역사와
+                    문화를 널리 알리고 세계와의 연대를 다지는 데 기여하고 있습니다.</p>
+        </div>
+        </div>
+        <div class="festival2">
+        <div class="festival2_image">
+            <img src="media/경주행사2.jpg" alt="행사2">
+        </div>
+        <div class="festival2_ment">
+            <h2>경주문화예술제</h2><br>
+            <p style="font-weight: 300;">경주문화예술제는 경주에서 매년 가을에 개최되는 문화 행사로, 
+                다양한 예술 공연과 이벤트가 열리는 축제입니다. 이 행사는 음악, 무용, 연극, 미술 전시 
+                등의 다채로운 프로그램을 제공하여 관람객들에게 풍성한 문화 경험을 선사합니다. 국내외의
+                 예술가들과 단체들이 참여하여 다양한 예술적 장르와 스타일을 선보입니다. 경주의 역사와 
+                 전통을 바탕으로 한 행사도 함께 진행되어 문화적으로 풍부한 경주의 면모를 보여줍니다. 
+                 이 행사는 경주를 문화 예술의 중심지로 소개하고, 지역 주민과 관광객들에게 즐거움과 감
+                 동을 선사하는 데 큰 역할을 하고 있습니다.</p>
+        </div>
+    </div>
+        <div class="festival3">
+            <div class="festival3_image">
+                <img src="media/경주행사3.jpg" alt="행사3">
+            </div>
+            <div class="festival3_ment">
+                <h2>불국사열전</h2><br>
+                <p style="font-weight: 300;">불국사역전은 대한민국 경주에서 매년 5월에 개최되는 불교
+                     문화 축제로, 불국사와 주변 지역에서 역사와 문화를 소개하고 보존하기 위한 행사입니다
+                     . 이 축제는 다양한 문화 행사와 전통 예술 공연이 펼쳐지며, 불교의 가르침을 이해하고
+                      체험할 수 있는 프로그램이 준비됩니다. 또한 불국사와 주변 유적지에서 다채로운 체험
+                       활동이 마련되어 방문객들에게 재미와 교육적 가치를 제공합니다. 불국사역전은 경주
+                       를 방문하는 관광객들뿐만 아니라 불교 신자들에게도 중요한 의미를 가지며, 경주의 
+                       역사와 문화를 널리 알리는 데 기여하고 있습니다.</p>
+            </div>
+            </div>
+            </div>
+            </div>
+        </div>
+      </section>
+    </div>
+</body>
+</html>
