@@ -37,7 +37,7 @@
           event.preventDefault();
           signOut(auth).then(() => {
               alert('로그아웃 성공!');
-              window.location.href = 'login.html'; // 로그인 페이지로 리디렉션
+              window.location.href = 'index.html'; // 로그인 페이지로 리디렉션
           }).catch((error) => {
               alert('로그아웃 실패: ' + error.message);
               console.error('로그아웃 실패', error);
