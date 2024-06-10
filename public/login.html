@@ -25,7 +25,7 @@
         .login-container img {
             width: 175px;
             margin-bottom: 20px;
-            cursor: pointer; /* 추가: 마우스 포인터를 변경하여 클릭 가능한 것처럼 보이도록 함 */
+            cursor: pointer;
         }
         .form-control {
             margin-bottom: 10px;
@@ -66,7 +66,6 @@
 </head>
 <body>
     <div class="login-container">
-        <!-- 아이콘을 클릭하면 goglesignin.html로 이동하도록 설정 -->
         <a href="goglesignin.html">
             <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Logo">
         </a>
@@ -133,7 +132,6 @@
             window.location.href = 'Signin.html';
         });
 
-        // 추가: 이미지를 클릭하면 goglesignin.html로 이동
         document.querySelector('.login-container img').addEventListener('click', () => {
             window.location.href = 'goglesignin.html';
         });

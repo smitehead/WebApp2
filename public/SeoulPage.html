@@ -11,6 +11,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">    <title>웹페이지 이름 미정</title>
 
     <title>Document</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQI-YZlvaxuAs0ZXWY4YXrJsqAzlGBEa0",
+            authDomain: "loginweb-4a1a6.firebaseapp.com",
+            projectId: "loginweb-4a1a6",
+            storageBucket: "loginweb-4a1a6.appspot.com",
+            messagingSenderId: "47986024855",
+            appId: "1:47986024855:web:6f5d2c1c6457269871e4d2",
+            measurementId: "G-2159KP57E5"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth();
+    
+        document.getElementById('logoutButton').addEventListener('click', (event) => {
+            event.preventDefault();
+            signOut(auth).then(() => {
+                alert('로그아웃 성공!');
+                window.location.href = 'index.html'; // 로그인 페이지로 리디렉션
+            }).catch((error) => {
+                alert('로그아웃 실패: ' + error.message);
+                console.error('로그아웃 실패', error);
+            });
+        });
+    </script>
 </head>
 <body>
     <nav class="menubar">
@@ -28,6 +58,7 @@
             
         </div>
         <!-- 로그인 페이지로 이동 -->
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNpAyn3OS4mRpLpEeOuqeteok3pt9zEfaLhg&s" alt="" id="logoutButton" width="25" height="25">
         <a href="ProfileCheck.html" class="menubar__login">
             <i class="fa-solid fa-user"></i>
         <a href="ProfileCheck.html" class="menubar__toggleBtn">
