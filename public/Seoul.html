@@ -142,16 +142,16 @@
     <script>
         function initMap() {
             var locations = {
-                "Gyeonggi_1": {lat: 38.1905148 , lng: 128.6035251},
-                "Gyeonggi_2": {lat: 37.9963711194097, lng: 128.198470749732},
-                "Gyeonggi_3": {lat: 37.3623595365092, lng: 128.635426674062},
+                "Gyeonggi_1": {lat: 37.579617  , lng: 126.977041},
+                "Gyeonggi_2": {lat: 37.5267106, lng: 126.9347112},
+                "Gyeonggi_3": {lat:  37.5511694, lng: 126.9882266},
                 // Add other locations here
             };
             
             for (var id in locations) {
                 var map = new google.maps.Map(document.getElementById('map-' + id), {
                     center: locations[id],
-                    zoom: 13
+                    zoom: 15
                 });
                 var marker = new google.maps.Marker({
                     position: locations[id],
@@ -229,7 +229,7 @@
                     </div>
                     <div class="right">
                         <div class="experience">
-                            <p>위치: 대한민국 강원도 속초시 조양동 해오름로 186 속초해수욕장</p>
+                            <p>위치:  대한민국 서울특별시 종로구 사직로 161</p>
                             <div class="image-container">
                                 <div id="map-Gyeonggi_1" style="width:100%; height:300px;"></div>
                             </div>
@@ -280,7 +280,7 @@
                     </div>
                     <div class="right">
                         <div class="experience">
-                            <p>위치: 강원특별자치도 인제군 인제읍 원대리 581</p>
+                            <p>위치: 대한민국 서울특별시 영등포구 여의동로 330 여의도한강공원</p>
                             <div class="image-container">
                                 <div id="map-Gyeonggi_2" style="width:100%; height:300px;"></div>
                             </div>
@@ -331,7 +331,7 @@
                     </div>
                     <div class="right">
                         <div class="experience">
-                            <p>위치: 강원도 정선군 정선읍 병방치길 225</p>
+                            <p>위치:  대한민국 서울특별시 용산구 남산공원길 105</p>
                             <div class="image-container">
                                 <div id="map-Gyeonggi_3" style="width:100%; height:300px;"></div>
                             </div>
