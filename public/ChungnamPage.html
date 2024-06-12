@@ -138,6 +138,28 @@
     </style>
 </head>
 <body>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASufxgy93d9XEAsliXeUgBtZfSSYEy5a8&callback=initMap" async defer></script>
+    <script>
+        function initMap() {
+            var locations = {
+                "Gyeonggi_1": {lat: 36.47137379999999, lng: 127.111593},
+                "Gyeonggi_2": {lat: 37.0468373 , lng: 126.5277158},
+                "Gyeonggi_3": {lat: 36.3055967 , lng: 126.5160485},
+                // Add other locations here
+            };
+            
+            for (var id in locations) {
+                var map = new google.maps.Map(document.getElementById('map-' + id), {
+                    center: locations[id],
+                    zoom: 15
+                });
+                var marker = new google.maps.Marker({
+                    position: locations[id],
+                    map: map
+                });
+            }
+        }
+    </script>
             <!--메뉴바-->
           <nav class="menubar">
             <div class="menubar__logo">
@@ -206,9 +228,9 @@
                     </div>
                     <div class="right">
                         <div class="experience">
-                            <p>위치: 강원특별시 무슨동 무슨구</p>
+                            <p>위치: 대한민국 충청남도 공주시 웅진동 438-2</p>
                             <div class="image-container">
-                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                                <div id="map-Gyeonggi_1" style="width:100%; height:300px;"></div>
                             </div>
                         </div>
                     </div>
@@ -257,9 +279,9 @@
                     </div>
                     <div class="right">
                         <div class="experience">
-                            <p>위치: 강원특별시 무슨동 무슨구</p>
+                            <p>위치: 대한민국 충청남도 당진시 석문면 교로리 844-25</p>
                             <div class="image-container">
-                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                                <div id="map-Gyeonggi_2" style="width:100%; height:300px;"></div>
                             </div>
                         </div>
                     </div>
@@ -308,9 +330,9 @@
                     </div>
                     <div class="right">
                         <div class="experience">
-                            <p>위치: 강원특별시 무슨동 무슨구</p>
+                            <p>위치: 대한민국 보령시 대천해수욕장</p>
                             <div class="image-container">
-                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                               <div id="map-Gyeonggi_3" style="width:100%; height:300px;"></div>
                             </div>
                         </div>
                     </div>
