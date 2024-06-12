@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">    <title>웹페이지 이름 미정</title>
-
+    <script src="https://kit.fontawesome.com/2cefce6bc1.js" crossorigin="anonymous"></script>
     <title>Document</title>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -41,6 +41,13 @@
             });
         });
     </script>
+    <style>
+        .menubar__login{
+            position: absolute;
+            top : 20px;
+            right : 12px;
+        }
+    </style>
 </head>
 <body>
     <nav class="menubar">
@@ -54,16 +61,14 @@
             <li><a href="ViewReview.html">리뷰</a></li>
             <li><a href="Checklist.html">체크리스트</a></li>
         </div>
-        <div class="menubar__search">
-            
-        </div>
         <!-- 로그인 페이지로 이동 -->
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNpAyn3OS4mRpLpEeOuqeteok3pt9zEfaLhg&s" alt="" id="logoutButton" width="25" height="25">
+        <div class="logOut_button">
+            <img src="media/logout.png" alt="" id="logoutButton" width="25" height="25"></div>
+            <div class="profile_button">
         <a href="ProfileCheck.html" class="menubar__login">
             <i class="fa-solid fa-user"></i>
-        <a href="ProfileCheck.html" class="menubar__toggleBtn">
-            <i class="fa-solid fa-bars"></i>
         </a>
+    </div>
       </nav>
       <div class="container" style="background-image: url(media/SeoulBG.jpg);">
         <div class="title">
