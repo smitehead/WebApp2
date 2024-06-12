@@ -138,6 +138,29 @@
     </style>
 </head>
 <body>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASufxgy93d9XEAsliXeUgBtZfSSYEy5a8&callback=initMap" async defer></script>
+    <script>
+        function initMap() {
+            var locations = {
+                "Gyeonggi_1": {lat: 35.3734766 , lng: 126.5350224},
+                "Gyeonggi_2": {lat: 35.8185161, lng: 127.152569},
+                "Gyeonggi_3": {lat: 35.8079529, lng: 127.3220815},
+                // Add other locations here
+            };
+            
+            for (var id in locations) {
+                var map = new google.maps.Map(document.getElementById('map-' + id), {
+                    center: locations[id],
+                    zoom: 15
+                });
+                var marker = new google.maps.Marker({
+                    position: locations[id],
+                    map: map
+                });
+            }
+        }
+    </script>
+
             <!--메뉴바-->
           <nav class="menubar">
             <div class="menubar__logo">
@@ -206,9 +229,9 @@
                     </div>
                     <div class="right">
                         <div class="experience">
-                            <p>위치: 강원특별시 무슨동 무슨구</p>
+                            <p>위치: 대한민국 전라북도 고창군 공음면 청천길 41-27</p>
                             <div class="image-container">
-                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                                <div id="map-Gyeonggi_1" style="width:100%; height:300px;"></div>
                             </div>
                         </div>
                     </div>
@@ -257,9 +280,9 @@
                     </div>
                     <div class="right">
                         <div class="experience">
-                            <p>위치: 강원특별시 무슨동 무슨구</p>
+                            <p>위치: 대한민국 전라북도 전주시 완산구 동문길 33-20</p>
                             <div class="image-container">
-                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                                <div id="map-Gyeonggi_2" style="width:100%; height:300px;"></div>
                             </div>
                         </div>
                     </div>
@@ -308,9 +331,9 @@
                     </div>
                     <div class="right">
                         <div class="experience">
-                            <p>위치: 강원특별시 무슨동 무슨구</p>
+                            <p>위치: 대한민국 전라북도 진안군 부귀면 세동리 69-15</p>
                             <div class="image-container">
-                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                                <div id="map-Gyeonggi_3" style="width:100%; height:300px;"></div>
                             </div>
                         </div>
                     </div>

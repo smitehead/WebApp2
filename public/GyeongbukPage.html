@@ -138,6 +138,28 @@
     </style>
 </head>
 <body>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASufxgy93d9XEAsliXeUgBtZfSSYEy5a8&callback=initMap" async defer></script>
+    <script>
+        function initMap() {
+            var locations = {
+                "Gyeonggi_1": {lat: 36.0673703, lng: 129.3920669},
+                "Gyeonggi_2": {lat: 35.8363095, lng: 129.2830502},
+                "Gyeonggi_3": {lat: 35.6841011584163, lng: 128.718184478287},
+                // Add other locations here
+            };
+            
+            for (var id in locations) {
+                var map = new google.maps.Map(document.getElementById('map-' + id), {
+                    center: locations[id],
+                    zoom: 15
+                });
+                var marker = new google.maps.Marker({
+                    position: locations[id],
+                    map: map
+                });
+            }
+        }
+    </script>
             <!--메뉴바-->
           <nav class="menubar">
             <div class="menubar__logo">
@@ -206,9 +228,9 @@
                     </div>
                     <div class="right">
                         <div class="experience">
-                            <p>위치: 강원특별시 무슨동 무슨구</p>
+                            <p>위치: 경상북도 포항시 북구 환호동 347</p>
                             <div class="image-container">
-                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                                <div id="map-Gyeonggi_1" style="width:100%; height:300px;"></div>
                             </div>
                         </div>
                     </div>
@@ -257,9 +279,9 @@
                     </div>
                     <div class="right">
                         <div class="experience">
-                            <p>위치: 강원특별시 무슨동 무슨구</p>
+                            <p>위치: 대한민국 경상북도 경주시 보문로 544</p>
                             <div class="image-container">
-                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                                <div id="map-Gyeonggi_2" style="width:100%; height:300px;"></div>
                             </div>
                         </div>
                     </div>
@@ -308,9 +330,9 @@
                     </div>
                     <div class="right">
                         <div class="experience">
-                            <p>위치: 강원특별시 무슨동 무슨구</p>
+                            <p>위치: 경북 청도군 화양읍 이슬미로 272-23</p>
                             <div class="image-container">
-                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                                <div id="map-Gyeonggi_3" style="width:100%; height:300px;"></div>
                             </div>
                         </div>
                     </div>
