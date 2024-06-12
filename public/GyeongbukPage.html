@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="menubar.css">
+    <link rel="stylesheet" type="text/css" href="FivePage.css">
+    <!--메뉴바 폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <title>대한민국 투어플레이스</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/2cefce6bc1.js" crossorigin="anonymous"></script>
+    <script src="main.js" defer></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  
+        const firebaseConfig = {
+            apiKey: "AIzaSyDQI-YZlvaxuAs0ZXWY4YXrJsqAzlGBEa0",
+            authDomain: "loginweb-4a1a6.firebaseapp.com",
+            projectId: "loginweb-4a1a6",
+            storageBucket: "loginweb-4a1a6.appspot.com",
+            messagingSenderId: "47986024855",
+            appId: "1:47986024855:web:6f5d2c1c6457269871e4d2",
+            measurementId: "G-2159KP57E5"
+        };
+  
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth();
+  
+        document.getElementById('logoutButton').addEventListener('click', (event) => {
+            event.preventDefault();
+            signOut(auth).then(() => {
+                alert('로그아웃 성공!');
+                window.location.href = 'index.html'; // 로그인 페이지로 리디렉션
+            }).catch((error) => {
+                alert('로그아웃 실패: ' + error.message);
+                console.error('로그아웃 실패', error);
+            });
+        });
+    </script>
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #E0E7FF;
+        }
+        .header {
+            background-image: url('media/gangbuk-title.png');
+            background-size: cover; 
+            background-position: center; 
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            color: white;
+            font-weight: bold;
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .content {
+            padding: 20px;
+        }
+        .content h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .content p {
+            font-size: 1em;
+            color: #555;
+            line-height: 1.6;
+        }
+        .keywords {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .keywords span {
+            background-color: rgb(118, 211, 248);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+        .image-container {
+            width: 100%;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        .image-container img {
+            width: 100%;
+            display: block;
+        }
+        .experience {
+            margin-top: 20px;
+        }
+        .experience h3 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .experience p {
+            font-size: 0.9em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .split-container {
+            display: flex;
+        }
+        .split-container .left,
+        .split-container .right {
+            width: 50%;
+            box-sizing: border-box;
+            padding: 0 10px;
+        }
+        .split-container .left img,
+        .split-container .right img {
+            width: 100%;
+            display: block;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+            <!--메뉴바-->
+          <nav class="menubar">
+            <div class="menubar__logo">
+                <img src="media/mainicon3.png" width="25px" height="25px">
+                <a href="main.html">대한민국 투어플레이스</a>
+            </div>
+            <div class="menubar__menu">
+                <li><a href="main.html">홈</a></li>
+                <li><a href="webprogramming.html">여행지</a></li>
+                <li><a href="ViewReview.html">리뷰</a></li>
+                <li><a href="Checklist.html">체크리스트</a></li>
+                
+            </div>
+            <!-- 로그인 페이지로 이동 -->
+            <div class="logOut_button">
+                <img src="media/logout.png"
+                 alt="" id="logoutButton" width="25" height="25">
+            </div>
+                <a href="ProfileCheck.html" class="menubar__login">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </nav>
+        
+    <div class="header">
+        <h1>경상북도</h1>
+        <p>경상북도는 다채로운 역사와 문화 유산을 자랑하며, 숨은 보물 같은 자연 경관도 함께 감상할 수 있는 곳입니다!</p>
+    </div>
+    <div class="container">
+        <section id="Gyeongbuk_1">
+            <div class="content">
+                <div class="experience">
+                    <h3>환호공원</h3>
+                </div>
+                <div class="keywords">
+                    <span>데이트</span>
+                    <span>대자연</span>
+                    <span>아름다운 도심</span>
+                    <span>감성</span>
+                </div>
+                <div class="split-container">
+                    <div class="left">
+                        <div class="experience">
+                            <p>여행하는 동안 인생에서 가장 아름다운 이미지를 많이 접하게 됩니다. 기념물, 라스베가스와 같은 대도시의 밝은 불빛, 웅장한 풍경 등 지구 곳곳에서 찍은 멋진 여행 사진을 무료로 선택 경험하세요</p>
+                            <div class="image-container">
+                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="experience">
+                            <p>여행하는 동안 인생에서 가장 아름다운 이미지를 많이접하게 됩니다. 기념물, 라스베가스와 같은 대도시의 밝은 불빛, 웅장한 풍경 등 지구 곳곳에서 찍은 멋진 여행 사진을 무료로 선택 경험하세요</p>
+                            <div class="image-container">
+                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="split-container">
+                    <div class="left">
+                        <div class="experience">
+                            <p>인생에서 가장 아름다운 이미지를 많이 접하게 됩니다.</p>
+                            <div class="image-container">
+                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="experience">
+                            <p>위치: 강원특별시 무슨동 무슨구</p>
+                            <div class="image-container">
+                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="container">
+        <section id="Gyeongbuk_2">
+            <div class="content">
+                <div class="experience">
+                    <h3>경주월드</h3>
+                </div>
+                <div class="keywords">
+                    <span>데이트</span>
+                    <span>대자연</span>
+                    <span>아름다운 도심</span>
+                    <span>감성</span>
+                </div>
+                <div class="split-container">
+                    <div class="left">
+                        <div class="experience">
+                            <p>여행하는 동안 인생에서 가장 아름다운 이미지를 많이 접하게 됩니다. 기념물, 라스베가스와 같은 대도시의 밝은 불빛, 웅장한 풍경 등 지구 곳곳에서 찍은 멋진 여행 사진을 무료로 선택 경험하세요</p>
+                            <div class="image-container">
+                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="experience">
+                            <p>여행하는 동안 인생에서 가장 아름다운 이미지를 많이접하게 됩니다. 기념물, 라스베가스와 같은 대도시의 밝은 불빛, 웅장한 풍경 등 지구 곳곳에서 찍은 멋진 여행 사진을 무료로 선택 경험하세요</p>
+                            <div class="image-container">
+                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="split-container">
+                    <div class="left">
+                        <div class="experience">
+                            <p>인생에서 가장 아름다운 이미지를 많이 접하게 됩니다.</p>
+                            <div class="image-container">
+                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="experience">
+                            <p>위치: 강원특별시 무슨동 무슨구</p>
+                            <div class="image-container">
+                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="container">
+        <section id="Gyeongbuk_3">
+            <div class="content">
+                <div class="experience">
+                    <h3>청도 프로방스 빛축제</h3>
+                </div>
+                <div class="keywords">
+                    <span>데이트</span>
+                    <span>대자연</span>
+                    <span>아름다운 도심</span>
+                    <span>감성</span>
+                </div>
+                <div class="split-container">
+                    <div class="left">
+                        <div class="experience">
+                            <p>여행하는 동안 인생에서 가장 아름다운 이미지를 많이 접하게 됩니다. 기념물, 라스베가스와 같은 대도시의 밝은 불빛, 웅장한 풍경 등 지구 곳곳에서 찍은 멋진 여행 사진을 무료로 선택 경험하세요</p>
+                            <div class="image-container">
+                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="experience">
+                            <p>여행하는 동안 인생에서 가장 아름다운 이미지를 많이접하게 됩니다. 기념물, 라스베가스와 같은 대도시의 밝은 불빛, 웅장한 풍경 등 지구 곳곳에서 찍은 멋진 여행 사진을 무료로 선택 경험하세요</p>
+                            <div class="image-container">
+                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="split-container">
+                    <div class="left">
+                        <div class="experience">
+                            <p>인생에서 가장 아름다운 이미지를 많이 접하게 됩니다.</p>
+                            <div class="image-container">
+                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="experience">
+                            <p>위치: 강원특별시 무슨동 무슨구</p>
+                            <div class="image-container">
+                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="container">
+        <div class="split-container">
+            <div class="left">
+                <div class="experience">
+                    <h3 style="text-align: center;">맷돌순두부</h3>
+                    <div class="keywords" style="text-align: center; display: flex; justify-content: center;">
+                        <span>카페</span>
+                        <span>음식이름</span>
+                    </div>            
+                    <p style="text-align: center;">충청남도 천안시</p>
+                    <div class="image-container" style="text-align: center;">
+                        <img src="media/경북 안동하회마을.png" alt="New Travel Destination Image">
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="experience">
+                    <h3 style="text-align: center;">황남빵</h3>
+                    <div class="keywords" style="text-align: center; display: flex; justify-content: center;">
+                        <span>카페</span>
+                        <span>음식이름</span>
+                    </div>                    
+                    <p style="text-align: center;">경기도 수원시</p>
+                    <div class="image-container" style="text-align: center;">
+                        <img src="media/경북 안동하회마을.png" alt="Exciting Travel Destination Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="split-container">
+            <div class="left">
+                <div class="experience">
+                    <h3 style="text-align: center;">교리김밥 본점</h3>
+                    <div class="keywords" style="text-align: center; display: flex; justify-content: center;">
+                        <span>카페</span>
+                        <span>음식이름</span>
+                    </div>            
+                    <p style="text-align: center;">경기도 의천시</p>
+                    <div class="image-container" style="text-align: center;">
+                        <img src="media/경북 안동하회마을.png" alt="New Travel Destination Image">
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="experience">
+                    <h3 style="text-align: center;">맘모스베이커리</h3>
+                    <div class="keywords" style="text-align: center; display: flex; justify-content: center;">
+                        <span>카페</span>
+                        <span>음식이름</span>
+                    </div>                    
+                    <p style="text-align: center;">경기도 화성시</p>
+                    <div class="image-container" style="text-align: center;">
+                        <img src="media/경북 안동하회마을.png" alt="Exciting Travel Destination Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div class="container">
+        <div class="split-container">
+            <div class="left">
+                <div class="experience">
+                    <h3 style="text-align: center;">가게 이름</h3>
+                    <div class="keywords" style="text-align: center; display: flex; justify-content: center;">
+                        <span>카페</span>
+                        <span>음식이름</span>
+                    </div>            
+                    <p style="text-align: center;">가게 위치</p>
+                    <div class="image-container" style="text-align: center;">
+                        <img src="media/경북 안동하회마을.png" alt="New Travel Destination Image">
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="experience">
+                    <h3 style="text-align: center;">가게 이름</h3>
+                    <div class="keywords" style="text-align: center; display: flex; justify-content: center;">
+                        <span>카페</span>
+                        <span>음식이름</span>
+                    </div>                    
+                    <p style="text-align: center;">가게 위치</p>
+                    <div class="image-container" style="text-align: center;">
+                        <img src="media/경북 안동하회마을.png" alt="Exciting Travel Destination Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>        
+</body>
+</html>
