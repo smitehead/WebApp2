@@ -138,6 +138,28 @@
     </style>
 </head>
 <body>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASufxgy93d9XEAsliXeUgBtZfSSYEy5a8&callback=initMap" async defer></script>
+    <script>
+        function initMap() {
+            var locations = {
+                "Chungbuk_1": {lat: 37.0339230512559, lng: 128.47181441348},
+                "Chungbuk_2": {lat: 36.5411201892361, lng: 127.832938034165},
+                "Chungbuk_3": {lat: 36.4924554815464, lng: 127.792474292437},
+                // Add other locations here
+            };
+            
+            for (var id in locations) {
+                var map = new google.maps.Map(document.getElementById('map-' + id), {
+                    center: locations[id],
+                    zoom: 15
+                });
+                var marker = new google.maps.Marker({
+                    position: locations[id],
+                    map: map
+                });
+            }
+        }
+    </script>
             <!--메뉴바-->
           <nav class="menubar">
             <div class="menubar__logo">
@@ -208,7 +230,7 @@
                         <div class="experience">
                             <p>위치: 강원특별시 무슨동 무슨구</p>
                             <div class="image-container">
-                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                                <div id="map-Chungbuk_1" style="width:100%; height:300px;"></div>
                             </div>
                         </div>
                     </div>
@@ -257,9 +279,9 @@
                     </div>
                     <div class="right">
                         <div class="experience">
-                            <p>위치: 강원특별시 무슨동 무슨구</p>
+                            <p>위치: 충북 보은군 속리산면 법주사로 405</p>
                             <div class="image-container">
-                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                                <div id="map-Chungbuk_2" style="width:100%; height:300px;"></div>
                             </div>
                         </div>
                     </div>
@@ -308,9 +330,9 @@
                     </div>
                     <div class="right">
                         <div class="experience">
-                            <p>위치: 강원특별시 무슨동 무슨구</p>
+                            <p>위치: 충청북도 보은군 속리산면 속리산로 596</p>
                             <div class="image-container">
-                                <img src="media/경북 안동하회마을.png" alt="Travel Image">
+                                <div id="map-Chungbuk_3" style="width: 100%; height: 300px;"></div>
                             </div>
                         </div>
                     </div>
