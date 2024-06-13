@@ -20,6 +20,7 @@
             background: #fff;
             border: 1px solid #dbdbdb;
             text-align: center;
+            position: relative; /* 상대 위치 설정 */
         }
         .profile-picture {
             width: 100px;
@@ -37,13 +38,18 @@
             background-color: #007bff;
             border-color: #007bff;
         }
+        .logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 30px;
+        }
     </style>
 </head>
 <body>
     <div class="profile-container">
-        <h1>Profile</h1>
-        <br>
-        <br>
+        <img src="media/mainicon3.png" class="logo" alt="대한민국플레이스 로고">
+        <h4 style="margin-bottom: 20px;">프로필</h4>
         <img src="https://via.placeholder.com/100" alt="프로필 사진" class="profile-picture" id="profilePicture">
         <div class="profile-info">
             <p><strong>닉네임:</strong> <span id="profileName">Loading...</span></p>
