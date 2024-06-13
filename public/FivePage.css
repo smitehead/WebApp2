@@ -1,44 +1,48 @@
 .container {
     padding: 20px;
+    background: #E0E7FF;
 }
 .menubar__logo img {
     position: relative;
     top : -5px;
 }
 .title {
-    position: relative;
+    text-align: center;
     left: 15px;
-    color : rgb(214, 228, 240);
+    color : white;
+    height: 150px;
+    width: 100%;
 }
 .title p {
-    font-size : 70px;
+    font-size : 60px;
 }
 .contents1 span {
-    font-size : 45px;
+    font-size : 35px;
     font-weight: 400;
 }
 .contents2 span {
-    font-size : 45px;
+    font-size : 35px;
     font-weight: 400;
 }
 .contents3 span {
-    font-size : 45px;
+    font-size : 35px;
     font-weight: 400;
 }
 .contents_wrap {
     display: flex;
     flex-direction: column;
-    max-width: 1100px;
+    max-width: 900px;
+    background-color: rgb(255, 255, 255);
     border:1px solid black;
     height: 2300px;
     margin-top:50px;
     margin: 0 auto;
-    background-color: rgb(214, 228, 240);
     border-radius: 5px;
 }
 .contents_wrap img {
     border-radius: 8px;
     border : 1px solid black;
+    width: 400px;
 }
 .contents_wrap h2{
     position : absolute;
@@ -48,6 +52,11 @@
     left:35px;
     margin-top: 25px;
     font-size : 30px;
+}
+.contents_ment {
+    display: flex;
+    width: 100%;
+    font-size : 16px;
 }
 /* 첫번째컨텐츠 */
 .contents1{
@@ -63,14 +72,9 @@
 }
 .contents1_image{
     display: flex;
-    width: 100%;
+    width: 400px;
     margin-top: 10px;
     padding-right: 20px;
-}
-.contents1_ment {
-    display: flex;
-    width: 100%;
-    font-size : 18px;
 }
 .contents1_1 {
     display: flex;
@@ -104,11 +108,6 @@
     margin-top: 10px;
     padding-right: 20px;
 }
-.contents2_ment {
-    display: flex;
-    width: 100%;
-    font-size : 18px;
-}
 .contents2_1 {
     display: flex;
     justify-content: center;
@@ -141,11 +140,6 @@
     margin-top: 10px;
     padding-right: 20px;
 }
-.contents3_ment {
-    display: flex;
-    width: 100%;
-    font-size : 18px;
-}
 .contents3_1 {
     display: flex;
     justify-content: center;
@@ -164,10 +158,10 @@
 /* 맛집 섹션 */
 .food_allwrap {
     border:1px solid black;
-    max-width: 1100px;
+    max-width: 900px;
+    background-color: rgb(255, 255, 255);
     margin: 0 auto;
     margin-top: 100px;
-    background-color: rgb(214, 228, 240);
     border-radius: 5px;
 }
 .food_title {
@@ -215,8 +209,8 @@
     margin: 0 auto;
     margin-top: 100px;
     height: 1250px;
-    max-width: 1100px;
-    background-color: rgb(214, 228, 240);
+    max-width: 900px;
+    background-color: rgb(255, 255, 255);
 }
 .festival_title {
     position: relative;
@@ -230,6 +224,7 @@
 .festivals img {
     border-radius: 8px;
     border : 1px solid black;
+    width: 400px;
 }
 .festival1 {
     display: flex;
