@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="menubar.css">
     <link rel="stylesheet" type="text/css" href="FivePage.css">
-    <!--메뉴바 폰트-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">    <title>웹페이지 이름 미정</title>
@@ -34,7 +33,7 @@
             event.preventDefault();
             signOut(auth).then(() => {
                 alert('로그아웃 성공!');
-                window.location.href = 'index.html'; // 로그인 페이지로 리디렉션
+                window.location.href = 'index.html';
             }).catch((error) => {
                 alert('로그아웃 실패: ' + error.message);
                 console.error('로그아웃 실패', error);
@@ -64,7 +63,6 @@
         <div class="menubar__search">
             
         </div>
-        <!-- 로그인 페이지로 이동 -->
         <div class="logOut_button">
             <img src="media/logout.png" alt="" id="logoutButton" width="25" height="25"></div>
             <div class="profile_button">

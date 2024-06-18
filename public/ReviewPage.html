@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>지역 축제 리뷰 페이지</title>
     <link rel="stylesheet" type="text/css" href="menubar.css">
-    <!--메뉴바 폰트-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">    <title>리뷰작성 페이지</title>
@@ -47,7 +46,6 @@
             <li><a href="ViewReview.html">리뷰</a></li>
             <li><a href="Checklist.html">체크리스트</a></li>
         </div>
-        <!-- 로그인 페이지로 이동 -->
         <a href="" class="menubar__login">
             <i class="fa-solid fa-user"></i>
         <a href="#" class="menubar__toggleBtn">
@@ -78,7 +76,6 @@
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        // Firebase 설정
         const firebaseConfig = {
             apiKey: "AIzaSyDQI-YZlvaxuAs0ZXWY4YXrJsqAzlGBEa0",
             authDomain: "loginweb-4a1a6.firebaseapp.com",
@@ -94,19 +91,16 @@
         const auth = getAuth();
         const db = getFirestore(app);
 
-        // UI 요소 참조
         const userNameElement = document.getElementById('userName');
         const userPhotoElement = document.getElementById('userPhoto');
         const reviewContentElement = document.getElementById('reviewContent');
         const submitReviewButton = document.getElementById('submitReview');
 
-        // 인증 상태 변경 감지
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 userNameElement.textContent = user.displayName || '익명 사용자';
                 userPhotoElement.src = user.photoURL || 'default-profile.png';
 
-                // 리뷰 제출 버튼 클릭 이벤트
                 submitReviewButton.addEventListener('click', async () => {
                     const content = reviewContentElement.value.trim();
                     if (content === '') {
@@ -115,18 +109,17 @@
                     }
 
                     try {
-                        // Firestore에 새로운 리뷰 추가
                         await addDoc(collection(db, 'reviews'), {
                             userId: user.uid,
                             userName: user.displayName || '익명 사용자',
                             userPhoto: user.photoURL || 'default-profile.png',
                             content: content,
                             timestamp: serverTimestamp(),
-                            recommendations: 0 // 기본 추천 수 설정
+                            recommendations: 0 
                         });
 
                         alert('리뷰가 등록되었습니다.');
-                        window.location.href = 'ViewReview.html'; // 리뷰 목록 페이지로 리디렉션
+                        window.location.href = 'ViewReview.html'; 
                     } catch (error) {
                         console.error('리뷰 등록 중 오류 발생:', error);
                         alert('리뷰 등록 중 오류가 발생했습니다. 다시 시도해주세요.');

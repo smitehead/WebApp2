@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="menubar.css">
-    <!--메뉴바 폰트-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">   
@@ -38,7 +37,7 @@
           event.preventDefault();
           signOut(auth).then(() => {
               alert('로그아웃 성공!');
-              window.location.href = 'index.html'; // 로그인 페이지로 리디렉션
+              window.location.href = 'index.html';
           }).catch((error) => {
               alert('로그아웃 실패: ' + error.message);
               console.error('로그아웃 실패', error);
@@ -48,7 +47,6 @@
 </head>
 <body>
     <div class="intro__bg">
-    <!--메뉴바-->
       <nav class="menubar">
         <div class="menubar__logo">
             <img src="media/mainicon3.png" width="25px" height="25px">
@@ -66,7 +64,6 @@
             <p2>국내 여행지, 관광 명소<br>
             지역 별 축제와 맛집까지 한 눈에</p2>
         </div>
-        <!-- 로그인 페이지로 이동 -->
          <div class="logOut_button">
         <img src="media/logout.png"
          alt="" id="logoutButton" width="25" height="25">
@@ -81,7 +78,6 @@
         <div class="contents5">
             <p>추천하는 여행지 5곳</p>
           </div>
-          <!-- 이미지 슬라이드 구현 -->
           <div id="carouselExampleCaptions" class="carousel slide">
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>

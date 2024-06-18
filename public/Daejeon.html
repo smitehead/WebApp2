@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="menubar.css">
     <link rel="stylesheet" type="text/css" href="FivePage.css">
-    <!--메뉴바 폰트-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
@@ -39,7 +38,7 @@
             event.preventDefault();
             signOut(auth).then(() => {
                 alert('로그아웃 성공!');
-                window.location.href = 'index.html'; // 로그인 페이지로 리디렉션
+                window.location.href = 'index.html';
             }).catch((error) => {
                 alert('로그아웃 실패: ' + error.message);
                 console.error('로그아웃 실패', error);
@@ -158,7 +157,6 @@
                 "Gyeonggi_1": {lat: 36.3172026 , lng: 127.4285703},
                 "Gyeonggi_2": {lat: 36.2886167, lng: 127.3969124},
                 "Gyeonggi_3": {lat: 36.33248469999999 , lng: 127.4514017},
-                // Add other locations here
             };
             
             for (var id in locations) {
@@ -173,8 +171,6 @@
             }
         }
     </script>
-
-            <!--메뉴바-->
           <nav class="menubar">
             <div class="menubar__logo">
                 <img src="media/mainicon3.png" width="25px" height="25px">
@@ -187,7 +183,6 @@
                 <li><a href="Checklist.html">체크리스트</a></li>
                 
             </div>
-            <!-- 로그인 페이지로 이동 -->
             <div class="logOut_button">
                 <img src="media/logout.png"
                  alt="" id="logoutButton" width="25" height="25">
